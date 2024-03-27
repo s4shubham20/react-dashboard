@@ -4,10 +4,19 @@ import '../src/App.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import MyRouter from './Components/Route/MyRouter.jsx';
+import axios from 'axios';
+axios.defaults.baseURL = 'https://samportfolio.in/back/public/index.php/';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Accept'] = 'application/json';
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  config.headers.Authorization = token ? `Bearer ${token}`:"";
+  return config;
+});
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={'/front'}>
       <MyRouter/>
     </BrowserRouter>
   </React.StrictMode>

@@ -18,7 +18,7 @@ export default function Category() {
     const categoryHandler = (evt) => {
         evt.preventDefault();
         if(id == undefined){
-            axios.post('http://localhost/laravel/react-with-laravel/public/index.php/api/category',category)
+            axios.post('api/category',category)
             .then(success => {
                 setCategory({});
                 navigate('/category');
@@ -27,7 +27,7 @@ export default function Category() {
                 console.log(error);
             })
         }else{
-            axios.patch(`http://localhost/laravel/react-with-laravel/public/index.php/api/category/${id}`, category)
+            axios.patch(`api/category/${id}`, category)
             .then(response => {
                 console.log(response);
             })
@@ -39,7 +39,7 @@ export default function Category() {
     
     useEffect(() => {
         if(id != undefined){
-            axios.get(`http://localhost/laravel/react-with-laravel/public/index.php/api/category/${id}/edit`)
+            axios.get(`api/category/${id}/edit`)
             .then(response => {
                 setCategory(response.data.category);
             })
@@ -67,9 +67,9 @@ export default function Category() {
                                     <div className='card'>
                                         <div className="card-header bg-light d-flex justify-content-between">
                                             <h3 className='mb-0'>
-                                                Cateories
+                                                {id== undefined ? 'Add':'Edit'} Cateories 
                                             </h3>
-                                            <Link to={'/category'} className='btn btn-primary'><i class="text-primary" data-feather="eye"></i>View Records</Link>
+                                            <Link to={'/category'} className='btn btn-primary'><i className="text-primary" data-feather="eye"></i>View Records</Link>
                                         </div>
                                         <div className="card-body">
                                             <form onSubmit={categoryHandler} className='row'>
@@ -84,10 +84,10 @@ export default function Category() {
                                                 <div className="col-12 mb-3">
                                                     <label htmlFor="status" className='form-label'>Status <span className='text-danger'>*</span></label>
                                                     <div className='d-flex gap-2'>
-                                                        <input type="radio" class="btn-check" value="1" checked={category.status == 1} onChange={inputHandler} name='status' id="btn-check-1" autocomplete="off"/>
-                                                        <label class="btn btn-outline-success" htmlFor="btn-check-1">Active</label>
-                                                        <input type="radio" class="btn-check"  value="0" checked={category.status == 0} onChange={inputHandler} name='status' id="btn-check-2" autocomplete="off"/>
-                                                        <label class="btn btn-outline-danger" htmlFor="btn-check-2">Inactive</label>
+                                                        <input type="radio" className="btn-check" value="1" checked={category.status == 1} onChange={inputHandler} name='status' id="btn-check-1" autocomplete="off"/>
+                                                        <label className="btn btn-outline-success" htmlFor="btn-check-1">Active</label>
+                                                        <input type="radio" className="btn-check"  value="0" checked={category.status == 0} onChange={inputHandler} name='status' id="btn-check-2" autocomplete="off"/>
+                                                        <label className="btn btn-outline-danger" htmlFor="btn-check-2">Inactive</label>
                                                     </div>
                                                 </div>
                                                 <div className="col-6 mb-3">

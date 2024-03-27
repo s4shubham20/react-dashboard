@@ -8,7 +8,7 @@ export default function CategoryList(){
     const [categories , setCategories] = useState([]);
     const [isLoding , setIsLoding] = useState(true);
     useEffect(() => {
-        axios.get('http://localhost/laravel/react-with-laravel/public/index.php/api/category')
+        axios.get('api/category')
         .then(success => {
             setCategories(success.data.categories);
             console.log(categories);
@@ -20,7 +20,7 @@ export default function CategoryList(){
     }, [])
     const deleteCategory = (evt) => {
         setIsLoding(true);
-        axios.delete(`http://localhost/laravel/react-with-laravel/public/index.php/api/category/${evt}`)
+        axios.delete(`api/category/${evt}`)
         .then(success => {
             // console.log(success);
             let oldData = [...categories];
@@ -39,6 +39,8 @@ export default function CategoryList(){
                     <td>{i+1}</td>
                     <td>{value.name}</td>
                     <td>{value.slug}</td>
+                    <td>{value.status}</td>
+                    <td>{value.created_at}</td>
                     <td>
                         <div className='btn-group'>
                             <Link className='btn btn-info' to={`/category/${value.id}/edit`}>Edit</Link>
@@ -63,7 +65,7 @@ export default function CategoryList(){
                                             <h3 className='mb-0'>
                                                 Cateories
                                             </h3>
-                                            <Link to={'/category/create'} className='btn btn-primary'><i class="text-primary" data-feather="eye"></i>Add Records</Link>
+                                            <Link to={'/category/create'} className='btn btn-primary'><i className="text-primary" data-feather="eye"></i>Add Records</Link>
                                         </div>
                                         <div className="card-body">
                                         {isLoding ? <Loader/>:
@@ -73,6 +75,8 @@ export default function CategoryList(){
                                                         <th>#</th>
                                                         <th>Category Name</th>
                                                         <th>Category Slug</th>
+                                                        <th>Status</th>
+                                                        <th>Created_At</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
